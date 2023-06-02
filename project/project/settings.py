@@ -27,9 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,9 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #Dependencies
     'rest_framework',
-    'corsheaders',
-    'knox',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt.token_blacklist'
+    # 'rest_framework_simplejwt',
+    # 'corsheaders',
+    # 'knox',
+
+    # Application configured
     'app',
     'authentication',
 ]
@@ -55,13 +59,20 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware'
 ]
 
-REST_FRAMEWORK = {'DEFAULT_PERMISSIONS_CLASSES': [
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSIONS_CLASSES': [
     # 'rest_framework.authentication.BasicAuthentication',
     # 'rest_framework.authentication.SessionAuthentication',
-    'knox.auth.TokenAuthentication',
-    ]}
+    # 'knox.auth.TokenAuthentication',
+    'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    }
 
-AUTH_USER_MODEL = 'authentication.CustomUser'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
