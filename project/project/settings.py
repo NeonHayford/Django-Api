@@ -36,16 +36,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #Dependencies
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_simplejwt.token_blacklist'
-    # 'rest_framework_simplejwt',
-    # 'corsheaders',
-    # 'knox',
-
+    'knox',
     # Application configured
     'app',
-    'authentication',
+    'authenticate',
+    'authorize_system',
 ]
 
 MIDDLEWARE = [
@@ -61,15 +59,13 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSIONS_CLASSES': [
-    # 'rest_framework.authentication.BasicAuthentication',
-    # 'rest_framework.authentication.SessionAuthentication',
-    # 'knox.auth.TokenAuthentication',
-    'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        # 'knox.auth.TokenAuthentication',
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'knox.auth.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     }
 
